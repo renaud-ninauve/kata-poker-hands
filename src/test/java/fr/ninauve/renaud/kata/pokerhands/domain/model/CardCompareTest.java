@@ -25,7 +25,7 @@ class CardCompareTest {
         "card1.value = card2.value + 1,QUEEN,JACK,1",
         "card1.value = card2.value + 1,KING,QUEEN,1",
         "card1.value = card2.value + 1,ACE,KING,1",
-        "card1.value = card2.value - 1,THREE,TWO,-1"
+        "card1.value = card2.value - 1,TWO,THREE,-1"
       })
   void should_order_by_value(String description, String value1, String value2, int expected) {
     final Card card1 = new Card(Value.valueOf(value1), Suit.HEARTS);
