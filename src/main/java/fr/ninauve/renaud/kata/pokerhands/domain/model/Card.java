@@ -14,7 +14,7 @@ public record Card(Value value, Suit suit) implements Comparable<Card> {
     FIVE,
     SIX,
     SEVEN,
-    HEIGHT,
+    EIGHT,
     NINE,
     TEN,
     JACK,
