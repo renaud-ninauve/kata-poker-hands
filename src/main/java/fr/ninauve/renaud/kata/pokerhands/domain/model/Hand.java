@@ -1,7 +1,8 @@
 package fr.ninauve.renaud.kata.pokerhands.domain.model;
 
 import fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit;
-import fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value;
+import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FlushPredicate;
+import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.StraightFlushPredicate;
 import java.util.Comparator;
 import java.util.List;
 import lombok.AccessLevel;
@@ -24,30 +25,19 @@ public class Hand implements Comparable<Hand> {
         .compare(this, other);
   }
 
+  public List<Card> lowestToHighest() {
+    return cards.stream().sorted(Comparator.comparing(Card::value)).toList();
+  }
+
+  public List<Suit> distinctSuits() {
+    return cards.stream().map(Card::suit).distinct().toList();
+  }
+
   private boolean isStraightFlush() {
-    return distinctSuits().size() == 1 && isFlush();
+    return new StraightFlushPredicate().test(this);
   }
 
   private boolean isFlush() {
-    final List<Value> sortedCardsValues = cards.stream().map(Card::value).sorted().toList();
-
-    boolean isFirst = true;
-    Value previous = null;
-    for (Value current : sortedCardsValues) {
-      if (isFirst) {
-        isFirst = false;
-        previous = current;
-        continue;
-      }
-      if (!current.isNextAfter(previous)) {
-        return false;
-      }
-      previous = current;
-    }
-    return true;
-  }
-
-  private List<Suit> distinctSuits() {
-    return cards.stream().map(Card::suit).distinct().toList();
+    return new FlushPredicate().test(this);
   }
 }
