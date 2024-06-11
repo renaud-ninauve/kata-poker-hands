@@ -21,6 +21,10 @@ public record Card(Value value, Suit suit) implements Comparable<Card> {
     QUEEN,
     KING,
     ACE;
+
+    public Card of(Suit suit) {
+      return new Card(this, suit);
+    }
   }
 
   public enum Suit {
