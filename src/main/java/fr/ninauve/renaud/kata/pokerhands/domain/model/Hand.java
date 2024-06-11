@@ -1,5 +1,6 @@
 package fr.ninauve.renaud.kata.pokerhands.domain.model;
 
+import fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,18 @@ public class Hand implements Comparable<Hand> {
   }
 
   @Override
-  public int compareTo(Hand o) {
-    return 0;
+  public int compareTo(Hand other) {
+    final boolean handIsStraightFlush = this.isStraightFlush();
+    final boolean otherIsStraightFlush = other.isStraightFlush();
+
+    return Boolean.compare(handIsStraightFlush, otherIsStraightFlush);
+  }
+
+  private boolean isStraightFlush() {
+    return distinctSuits().size() == 1;
+  }
+
+  private List<Suit> distinctSuits() {
+    return cards.stream().map(Card::suit).distinct().toList();
   }
 }
