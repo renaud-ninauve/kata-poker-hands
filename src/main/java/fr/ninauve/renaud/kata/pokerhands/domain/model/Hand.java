@@ -9,8 +9,10 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 @EqualsAndHashCode
+@ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Hand {
   private final List<Card> cards;
@@ -39,5 +41,9 @@ public class Hand {
 
   public List<Suit> distinctSuits() {
     return cards.stream().map(Card::suit).distinct().toList();
+  }
+
+  public Hand replace(Card card, Card replacement) {
+    return null;
   }
 }
