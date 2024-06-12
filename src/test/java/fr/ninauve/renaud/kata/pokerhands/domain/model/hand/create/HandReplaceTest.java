@@ -1,4 +1,4 @@
-package fr.ninauve.renaud.kata.pokerhands.domain.model.hand;
+package fr.ninauve.renaud.kata.pokerhands.domain.model.hand.create;
 
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.DIAMONDS;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.HEARTS;

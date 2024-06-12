@@ -48,4 +48,8 @@ public class Hand {
         cards.stream().map(current -> current.equals(card) ? replacement : current).toList();
     return new Hand(newCards);
   }
+
+  public Hand incrementValues() {
+    return null;
+  }
 }
