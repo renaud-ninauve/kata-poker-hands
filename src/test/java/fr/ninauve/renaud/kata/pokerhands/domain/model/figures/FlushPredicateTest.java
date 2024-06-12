@@ -66,7 +66,7 @@ class FlushPredicateTest {
   }
 
   void is_flush(Hand hand, boolean expected) {
-    final boolean actual = new FlushPredicate().test(hand);
+    final boolean actual = new FlushRanking().matches(hand);
     assertThat(actual).isEqualTo(expected);
   }
 

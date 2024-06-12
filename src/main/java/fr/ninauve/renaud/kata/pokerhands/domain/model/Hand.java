@@ -1,7 +1,7 @@
 package fr.ninauve.renaud.kata.pokerhands.domain.model;
 
 import fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit;
-import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FlushPredicate;
+import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FlushRanking;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.StraightFlushRanking;
 import java.util.Comparator;
 import java.util.List;
@@ -20,12 +20,15 @@ public class Hand {
 
   public RankingResult compareRanks(Hand other) {
     final StraightFlushRanking straightFlushRanking = new StraightFlushRanking();
+    final FlushRanking flushRanking = new FlushRanking();
 
     if (straightFlushRanking.matches(this)) {
       return straightFlushRanking.compareRanks(this, other);
     }
-    return RankingResult.fromCompareResult(
-        Comparator.comparing(Hand::isFlush).compare(this, other));
+    if (flushRanking.matches(this)) {
+      return flushRanking.compareRanks(this, other);
+    }
+    return RankingResult.SIMILAR;
   }
 
   public List<Card> lowestToHighest() {
@@ -40,7 +43,4 @@ public class Hand {
     return cards.stream().map(Card::suit).distinct().toList();
   }
 
-  private boolean isFlush() {
-    return new FlushPredicate().test(this);
-  }
 }

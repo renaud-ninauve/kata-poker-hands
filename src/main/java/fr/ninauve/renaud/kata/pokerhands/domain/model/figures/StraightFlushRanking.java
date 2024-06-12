@@ -5,7 +5,7 @@ import fr.ninauve.renaud.kata.pokerhands.domain.model.RankingResult;
 import java.util.Comparator;
 
 public class StraightFlushRanking {
-  private final FlushPredicate flushPredicate = new FlushPredicate();
+  private final FlushRanking flushPredicate = new FlushRanking();
 
   public boolean matches(Hand hand) {
     return hand.distinctSuits().size() == 1 && isFlush(hand);
@@ -17,6 +17,6 @@ public class StraightFlushRanking {
   }
 
   private boolean isFlush(Hand hand) {
-    return flushPredicate.test(hand);
+    return flushPredicate.matches(hand);
   }
 }
