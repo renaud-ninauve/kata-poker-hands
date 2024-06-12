@@ -44,6 +44,8 @@ public class Hand {
   }
 
   public Hand replace(Card card, Card replacement) {
-    return null;
+    final List<Card> newCards =
+        cards.stream().map(current -> current.equals(card) ? replacement : current).toList();
+    return new Hand(newCards);
   }
 }
