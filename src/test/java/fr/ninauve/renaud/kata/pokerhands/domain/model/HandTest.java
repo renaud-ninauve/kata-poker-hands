@@ -12,8 +12,11 @@ import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.SIX;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.THREE;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TWO;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.Hand.RankingResult.HIGHER;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.Hand.RankingResult.SIMILAR;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import fr.ninauve.renaud.kata.pokerhands.domain.model.Hand.RankingResult;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
@@ -28,9 +31,9 @@ class HandTest {
         Hand.of(
             TWO.of(HEARTS), FOUR.of(SPADES), SIX.of(HEARTS), EIGHT.of(SPADES), TEN.of(DIAMONDS));
 
-    final int actual = hand1.compareTo(hand2);
+    final RankingResult actual = hand1.compareRanks(hand2);
 
-    assertThat(actual).isZero();
+    assertThat(actual).isEqualTo(SIMILAR);
   }
 
   @Test
@@ -47,9 +50,9 @@ class HandTest {
     final Hand highCard =
         Hand.of(TWO.of(DIAMONDS), FOUR.of(HEARTS), SIX.of(SPADES), EIGHT.of(CLUBS), TEN.of(SPADES));
 
-    final int actual = straightFlush.compareTo(highCard);
+    final RankingResult actual = straightFlush.compareRanks(highCard);
 
-    assertThat(actual).isEqualTo(1);
+    assertThat(actual).isEqualTo(HIGHER);
   }
 
   @Test
@@ -66,9 +69,9 @@ class HandTest {
     final Hand flush =
         Hand.of(TWO.of(CLUBS), FOUR.of(CLUBS), SIX.of(CLUBS), EIGHT.of(CLUBS), TEN.of(CLUBS));
 
-    final int actual = straightFlush.compareTo(flush);
+    final RankingResult actual = straightFlush.compareRanks(flush);
 
-    assertThat(actual).isEqualTo(1);
+    assertThat(actual).isEqualTo(HIGHER);
   }
 
   @Test
@@ -76,11 +79,7 @@ class HandTest {
 
     final Hand higher =
         Hand.of(
-            THREE.of(SPADES),
-            FOUR.of(SPADES),
-            FIVE.of(SPADES),
-            SIX.of(SPADES),
-            SEVEN.of(SPADES));
+            THREE.of(SPADES), FOUR.of(SPADES), FIVE.of(SPADES), SIX.of(SPADES), SEVEN.of(SPADES));
 
     final Hand lower =
         Hand.of(
@@ -90,8 +89,8 @@ class HandTest {
             FIVE.of(DIAMONDS),
             SIX.of(DIAMONDS));
 
-    final int actual = higher.compareTo(lower);
+    final RankingResult actual = higher.compareRanks(lower);
 
-    assertThat(actual).isEqualTo(1);
+    assertThat(actual).isEqualTo(HIGHER);
   }
 }

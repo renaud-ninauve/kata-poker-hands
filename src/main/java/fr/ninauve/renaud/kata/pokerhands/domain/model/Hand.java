@@ -11,21 +11,37 @@ import lombok.RequiredArgsConstructor;
 
 @EqualsAndHashCode
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class Hand implements Comparable<Hand> {
+public class Hand {
   private final List<Card> cards;
 
   public static Hand of(Card card1, Card card2, Card card3, Card card4, Card card5) {
     return new Hand(List.of(card1, card2, card3, card4, card5));
   }
 
-  @Override
-  public int compareTo(Hand other) {
+  public RankingResult compareRanks(Hand other) {
     if (isStraightFlush()) {
-      return Comparator.comparing(Hand::isStraightFlush)
-          .thenComparing(Hand::highest)
-          .compare(this, other);
+      return RankingResult.fromCompareResult(
+          Comparator.comparing(Hand::isStraightFlush)
+              .thenComparing(Hand::highest)
+              .compare(this, other));
     }
-    return Comparator.comparing(Hand::isFlush).compare(this, other);
+    return RankingResult.fromCompareResult(
+        Comparator.comparing(Hand::isFlush).compare(this, other));
+  }
+
+  public enum RankingResult {
+    HIGHER,
+    LOWER,
+    SIMILAR;
+
+    public static RankingResult fromCompareResult(int compareResult) {
+      if (compareResult > 0) {
+        return HIGHER;
+      } else if (compareResult < 0) {
+        return LOWER;
+      }
+      return SIMILAR;
+    }
   }
 
   public List<Card> lowestToHighest() {
