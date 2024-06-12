@@ -6,8 +6,9 @@ import fr.ninauve.renaud.kata.pokerhands.domain.model.RankingResult;
 import java.util.Comparator;
 import java.util.List;
 
-public class FlushRanking {
+public class FlushRanking implements FigureRanking {
 
+  @Override
   public boolean matches(Hand hand) {
     final List<Card> lowestToHighest = hand.lowestToHighest();
 
@@ -27,6 +28,7 @@ public class FlushRanking {
     return true;
   }
 
+  @Override
   public RankingResult compareRanks(Hand hand1, Hand hand2) {
     return RankingResult.fromCompareResult(
         Comparator.comparing(this::matches).compare(hand1, hand2));

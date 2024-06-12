@@ -1,6 +1,7 @@
 package fr.ninauve.renaud.kata.pokerhands.domain.model;
 
 import fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit;
+import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FigureRanking;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FlushRanking;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.StraightFlushRanking;
 import java.util.Comparator;
@@ -19,8 +20,8 @@ public class Hand {
   }
 
   public RankingResult compareRanks(Hand other) {
-    final StraightFlushRanking straightFlushRanking = new StraightFlushRanking();
-    final FlushRanking flushRanking = new FlushRanking();
+    final FigureRanking straightFlushRanking = new StraightFlushRanking();
+    final FigureRanking flushRanking = new FlushRanking();
 
     if (straightFlushRanking.matches(this)) {
       return straightFlushRanking.compareRanks(this, other);
