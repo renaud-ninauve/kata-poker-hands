@@ -20,16 +20,13 @@ public class Hand {
   }
 
   public RankingResult compareRanks(Hand other) {
-    final FigureRanking straightFlushRanking = new StraightFlushRanking();
-    final FigureRanking flushRanking = new FlushRanking();
+    final List<FigureRanking> rankings = List.of(new StraightFlushRanking(), new FlushRanking());
 
-    if (straightFlushRanking.matches(this)) {
-      return straightFlushRanking.compareRanks(this, other);
-    }
-    if (flushRanking.matches(this)) {
-      return flushRanking.compareRanks(this, other);
-    }
-    return RankingResult.SIMILAR;
+    return rankings.stream()
+        .filter(ranking -> ranking.matches(this))
+        .findFirst()
+        .map(ranking -> ranking.compareRanks(this, other))
+        .orElse(RankingResult.SIMILAR);
   }
 
   public List<Card> lowestToHighest() {
@@ -43,5 +40,4 @@ public class Hand {
   public List<Suit> distinctSuits() {
     return cards.stream().map(Card::suit).distinct().toList();
   }
-
 }
