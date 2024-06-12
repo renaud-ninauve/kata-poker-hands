@@ -23,7 +23,7 @@ public class Hand {
     final List<FigureRanking> rankings = List.of(new StraightFlushRanking(), new FlushRanking());
 
     return rankings.stream()
-        .filter(ranking -> ranking.matches(this))
+        .filter(ranking -> ranking.matches(this) || ranking.matches(other))
         .findFirst()
         .map(ranking -> ranking.compareRanks(this, other))
         .orElse(RankingResult.SIMILAR);
