@@ -2,12 +2,10 @@ package fr.ninauve.renaud.kata.pokerhands.domain.model.figures;
 
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.DIAMONDS;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.SPADES;
-import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.EIGHT;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.FIVE;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.FOUR;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.SEVEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.SIX;
-import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.THREE;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,32 +17,26 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class FlushPredicateTest {
+class StraightFlushRankingTest {
 
-  static Stream<Arguments> is_flush() {
+  static Stream<Arguments> is_straightflush() {
     return Stream.of(
         hand(
             TWO.of(DIAMONDS),
             THREE.of(DIAMONDS),
             FOUR.of(DIAMONDS),
             FIVE.of(DIAMONDS),
-            SIX.of(DIAMONDS)),
+            SIX.of(DIAMONDS)));
+  }
+
+  static Stream<Arguments> is_not_straightflush() {
+    return Stream.of(
         hand(
             TWO.of(DIAMONDS),
             THREE.of(SPADES),
             FOUR.of(DIAMONDS),
             FIVE.of(DIAMONDS),
-            SIX.of(DIAMONDS)));
-  }
-
-  static Stream<Arguments> is_not_flush() {
-    return Stream.of(
-        hand(
-            TWO.of(DIAMONDS),
-            FOUR.of(DIAMONDS),
-            SIX.of(DIAMONDS),
-            EIGHT.of(DIAMONDS),
-            TEN.of(DIAMONDS)),
+            SIX.of(DIAMONDS)),
         hand(
             TWO.of(DIAMONDS),
             THREE.of(SPADES),
@@ -55,18 +47,18 @@ class FlushPredicateTest {
 
   @ParameterizedTest
   @MethodSource
-  void is_flush(Hand hand) {
-    is_flush(hand, true);
+  void is_straightflush(Hand hand) {
+    is_straightflush(hand, true);
   }
 
   @ParameterizedTest
   @MethodSource
-  void is_not_flush(Hand hand) {
-    is_flush(hand, false);
+  void is_not_straightflush(Hand hand) {
+    is_straightflush(hand, false);
   }
 
-  void is_flush(Hand hand, boolean expected) {
-    final boolean actual = new FlushRanking().matches(hand);
+  void is_straightflush(Hand hand, boolean expected) {
+    final boolean actual = new StraightFlushRanking().matches(hand);
     assertThat(actual).isEqualTo(expected);
   }
 
