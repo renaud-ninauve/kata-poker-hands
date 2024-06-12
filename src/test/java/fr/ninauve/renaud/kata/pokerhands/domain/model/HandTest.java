@@ -12,11 +12,10 @@ import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.SIX;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.THREE;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TWO;
-import static fr.ninauve.renaud.kata.pokerhands.domain.model.Hand.RankingResult.HIGHER;
-import static fr.ninauve.renaud.kata.pokerhands.domain.model.Hand.RankingResult.SIMILAR;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.RankingResult.HIGHER;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.RankingResult.SIMILAR;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import fr.ninauve.renaud.kata.pokerhands.domain.model.Hand.RankingResult;
 import org.junit.jupiter.api.Test;
 
 class HandTest {

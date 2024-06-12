@@ -29,21 +29,6 @@ public class Hand {
         Comparator.comparing(Hand::isFlush).compare(this, other));
   }
 
-  public enum RankingResult {
-    HIGHER,
-    LOWER,
-    SIMILAR;
-
-    public static RankingResult fromCompareResult(int compareResult) {
-      if (compareResult > 0) {
-        return HIGHER;
-      } else if (compareResult < 0) {
-        return LOWER;
-      }
-      return SIMILAR;
-    }
-  }
-
   public List<Card> lowestToHighest() {
     return cards.stream().sorted(Comparator.comparing(Card::value)).toList();
   }
