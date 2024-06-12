@@ -13,6 +13,8 @@ import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.THREE;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TWO;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.RankingResult.HIGHER;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.RankingResult.LOWER;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.RankingResult.SIMILAR;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import fr.ninauve.renaud.kata.pokerhands.domain.model.Hand;
@@ -57,5 +59,43 @@ class FlushHandTest {
     final RankingResult actual = higher.compareRanks(lower);
 
     assertThat(actual).isEqualTo(HIGHER);
+  }
+
+  @Test
+  void flush_loses_straightflush() {
+
+    final Hand flush =
+        Hand.of(
+            THREE.of(DIAMONDS),
+            FOUR.of(SPADES),
+            FIVE.of(DIAMONDS),
+            SIX.of(SPADES),
+            SEVEN.of(DIAMONDS));
+
+    final Hand straightFlush =
+        Hand.of(TWO.of(HEARTS), THREE.of(HEARTS), FOUR.of(HEARTS), FIVE.of(HEARTS), SIX.of(HEARTS));
+
+    final RankingResult actual = flush.compareRanks(straightFlush);
+
+    assertThat(actual).isEqualTo(LOWER);
+  }
+
+  @Test
+  void flush_draws_flush() {
+
+    final Hand flush1 =
+        Hand.of(
+            TWO.of(DIAMONDS),
+            THREE.of(SPADES),
+            FOUR.of(DIAMONDS),
+            FIVE.of(SPADES),
+            SIX.of(DIAMONDS));
+
+    final Hand flush2 =
+        Hand.of(TWO.of(CLUBS), THREE.of(HEARTS), FOUR.of(CLUBS), FIVE.of(HEARTS), SIX.of(CLUBS));
+
+    final RankingResult actual = flush1.compareRanks(flush2);
+
+    assertThat(actual).isEqualTo(SIMILAR);
   }
 }
