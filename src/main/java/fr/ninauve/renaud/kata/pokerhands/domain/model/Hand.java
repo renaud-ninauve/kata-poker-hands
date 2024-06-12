@@ -2,7 +2,7 @@ package fr.ninauve.renaud.kata.pokerhands.domain.model;
 
 import fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FlushPredicate;
-import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.StraightFlushPredicate;
+import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.StraightFlushRanking;
 import java.util.Comparator;
 import java.util.List;
 import lombok.AccessLevel;
@@ -19,11 +19,10 @@ public class Hand {
   }
 
   public RankingResult compareRanks(Hand other) {
-    if (isStraightFlush()) {
-      return RankingResult.fromCompareResult(
-          Comparator.comparing(Hand::isStraightFlush)
-              .thenComparing(Hand::highest)
-              .compare(this, other));
+    final StraightFlushRanking straightFlushRanking = new StraightFlushRanking();
+
+    if (straightFlushRanking.matches(this)) {
+      return straightFlushRanking.compareRanks(this, other);
     }
     return RankingResult.fromCompareResult(
         Comparator.comparing(Hand::isFlush).compare(this, other));
@@ -39,10 +38,6 @@ public class Hand {
 
   public List<Suit> distinctSuits() {
     return cards.stream().map(Card::suit).distinct().toList();
-  }
-
-  private boolean isStraightFlush() {
-    return new StraightFlushPredicate().test(this);
   }
 
   private boolean isFlush() {

@@ -58,7 +58,7 @@ class StraightFlushPredicateTest {
   }
 
   void is_straightflush(Hand hand, boolean expected) {
-    final boolean actual = new StraightFlushPredicate().test(hand);
+    final boolean actual = new StraightFlushRanking().matches(hand);
     assertThat(actual).isEqualTo(expected);
   }
 
