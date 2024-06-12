@@ -31,6 +31,6 @@ public class FlushRanking implements FigureRanking {
   @Override
   public RankingResult compareRanks(Hand hand1, Hand hand2) {
     return RankingResult.fromCompareResult(
-        Comparator.comparing(this::matches).compare(hand1, hand2));
+        Comparator.comparing(this::matches).thenComparing(Hand::highest).compare(hand1, hand2));
   }
 }
