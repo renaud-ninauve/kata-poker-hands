@@ -7,6 +7,7 @@ import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.SPADES;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.EIGHT;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.FIVE;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.FOUR;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.SEVEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.SIX;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.THREE;
@@ -66,6 +67,30 @@ class HandTest {
         Hand.of(TWO.of(CLUBS), FOUR.of(CLUBS), SIX.of(CLUBS), EIGHT.of(CLUBS), TEN.of(CLUBS));
 
     final int actual = straightFlush.compareTo(flush);
+
+    assertThat(actual).isEqualTo(1);
+  }
+
+  @Test
+  void straightflush_beats_straightflush() {
+
+    final Hand higher =
+        Hand.of(
+            TWO.of(DIAMONDS),
+            THREE.of(DIAMONDS),
+            FOUR.of(DIAMONDS),
+            FIVE.of(DIAMONDS),
+            SIX.of(DIAMONDS));
+
+    final Hand lower =
+        Hand.of(
+            THREE.of(SPADES),
+            FOUR.of(SPADES),
+            FIVE.of(SPADES),
+            SIX.of(SPADES),
+            SEVEN.of(SPADES));
+
+    final int actual = higher.compareTo(lower);
 
     assertThat(actual).isEqualTo(1);
   }
