@@ -50,6 +50,8 @@ public class Hand {
   }
 
   public Hand incrementValues() {
-    return null;
+    final List<Card> newCards =
+        cards.stream().map(card -> card.value().next().of(card.suit())).toList();
+    return new Hand(newCards);
   }
 }

@@ -29,6 +29,10 @@ public record Card(Value value, Suit suit) implements Comparable<Card> {
     public boolean isNextAfter(Value other) {
       return this.ordinal() == other.ordinal() + 1;
     }
+
+    public Value next() {
+      return values()[ordinal() + 1];
+    }
   }
 
   public enum Suit {
