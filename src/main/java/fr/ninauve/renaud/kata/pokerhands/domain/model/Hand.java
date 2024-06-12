@@ -20,13 +20,20 @@ public class Hand implements Comparable<Hand> {
 
   @Override
   public int compareTo(Hand other) {
-    return Comparator.comparing(Hand::isStraightFlush)
-        .thenComparing(Hand::isFlush)
-        .compare(this, other);
+    if (isStraightFlush()) {
+      return Comparator.comparing(Hand::isStraightFlush)
+          .thenComparing(Hand::highest)
+          .compare(this, other);
+    }
+    return Comparator.comparing(Hand::isFlush).compare(this, other);
   }
 
   public List<Card> lowestToHighest() {
     return cards.stream().sorted(Comparator.comparing(Card::value)).toList();
+  }
+
+  public Card highest() {
+    return lowestToHighest().get(4);
   }
 
   public List<Suit> distinctSuits() {

@@ -76,19 +76,19 @@ class HandTest {
 
     final Hand higher =
         Hand.of(
-            TWO.of(DIAMONDS),
-            THREE.of(DIAMONDS),
-            FOUR.of(DIAMONDS),
-            FIVE.of(DIAMONDS),
-            SIX.of(DIAMONDS));
-
-    final Hand lower =
-        Hand.of(
             THREE.of(SPADES),
             FOUR.of(SPADES),
             FIVE.of(SPADES),
             SIX.of(SPADES),
             SEVEN.of(SPADES));
+
+    final Hand lower =
+        Hand.of(
+            TWO.of(DIAMONDS),
+            THREE.of(DIAMONDS),
+            FOUR.of(DIAMONDS),
+            FIVE.of(DIAMONDS),
+            SIX.of(DIAMONDS));
 
     final int actual = higher.compareTo(lower);
 
