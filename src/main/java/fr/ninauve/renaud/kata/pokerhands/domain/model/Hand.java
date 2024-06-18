@@ -6,6 +6,8 @@ import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FlushRanking;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.StraightFlushRanking;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +17,10 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Hand {
-  private final List<Card> cards;
+  private final Set<Card> cards;
 
   public static Hand of(Card card1, Card card2, Card card3, Card card4, Card card5) {
-    return new Hand(List.of(card1, card2, card3, card4, card5));
+    return new Hand(Set.of(card1, card2, card3, card4, card5));
   }
 
   public RankingResult compareRanks(Hand other) {
@@ -44,14 +46,16 @@ public class Hand {
   }
 
   public Hand replace(Card card, Card replacement) {
-    final List<Card> newCards =
-        cards.stream().map(current -> current.equals(card) ? replacement : current).toList();
+    final Set<Card> newCards =
+        cards.stream()
+            .map(current -> current.equals(card) ? replacement : current)
+            .collect(Collectors.toSet());
     return new Hand(newCards);
   }
 
   public Hand incrementValues() {
-    final List<Card> newCards =
-        cards.stream().map(card -> card.value().next().of(card.suit())).toList();
+    final Set<Card> newCards =
+        cards.stream().map(card -> card.value().next().of(card.suit())).collect(Collectors.toSet());
     return new Hand(newCards);
   }
 }
