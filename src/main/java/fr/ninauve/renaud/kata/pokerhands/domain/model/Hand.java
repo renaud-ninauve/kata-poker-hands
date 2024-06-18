@@ -4,6 +4,7 @@ import fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FigureRanking;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FlushRanking;
+import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FourOfAKindRanking;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.StraightFlushRanking;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,7 +48,8 @@ public class Hand {
   }
 
   public RankingResult compareRanks(Hand other) {
-    final List<FigureRanking> rankings = List.of(new StraightFlushRanking(), new FlushRanking());
+    final List<FigureRanking> rankings =
+        List.of(new StraightFlushRanking(), new FourOfAKindRanking(), new FlushRanking());
 
     return rankings.stream()
         .filter(ranking -> ranking.matches(this) || ranking.matches(other))
