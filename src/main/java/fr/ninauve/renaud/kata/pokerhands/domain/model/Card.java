@@ -27,11 +27,15 @@ public record Card(Value value, Suit suit) implements Comparable<Card> {
     }
 
     public boolean isNextAfter(Value other) {
-      return this.ordinal() == other.ordinal() + 1;
+      return this == other.next();
     }
 
     public Value next() {
       return values()[ordinal() + 1];
+    }
+
+    public Value previous() {
+      return values()[ordinal() - 1];
     }
   }
 

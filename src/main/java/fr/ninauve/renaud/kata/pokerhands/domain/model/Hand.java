@@ -31,7 +31,7 @@ public class Hand {
     cards.add(highest);
     while (cards.size() < 5) {
       final Card previous = cards.get(cards.size() - 1);
-      final Value nextLesserValue = Value.values()[previous.value().ordinal() - 1];
+      final Value nextLesserValue = previous.value().previous();
       cards.add(nextLesserValue.of(highest.suit()));
     }
     return new Hand(new HashSet<>(cards));
@@ -69,9 +69,7 @@ public class Hand {
 
   public Hand incrementValues() {
     final Set<Card> newCards =
-        cards.stream()
-            .map(card -> card.value().next().of(card.suit()))
-            .collect(Collectors.toSet());
+        cards.stream().map(card -> card.value().next().of(card.suit())).collect(Collectors.toSet());
     return new Hand(newCards);
   }
 }
