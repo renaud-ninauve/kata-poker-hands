@@ -26,13 +26,7 @@ class FlushHandTest {
   @Test
   void flush_beats_highcard() {
 
-    final Hand straightFlush =
-        Hand.of(
-            TWO.of(DIAMONDS),
-            THREE.of(SPADES),
-            FOUR.of(DIAMONDS),
-            FIVE.of(HEARTS),
-            SIX.of(DIAMONDS));
+    final Hand straightFlush = Hand.straightFlush(SIX.of(DIAMONDS));
 
     final Hand highCard =
         Hand.of(TWO.of(DIAMONDS), FOUR.of(HEARTS), SIX.of(SPADES), EIGHT.of(CLUBS), TEN.of(SPADES));
@@ -72,8 +66,7 @@ class FlushHandTest {
             SIX.of(SPADES),
             SEVEN.of(DIAMONDS));
 
-    final Hand straightFlush =
-        Hand.of(TWO.of(HEARTS), THREE.of(HEARTS), FOUR.of(HEARTS), FIVE.of(HEARTS), SIX.of(HEARTS));
+    final Hand straightFlush = Hand.straightFlush(SIX.of(HEARTS));
 
     final RankingResult actual = flush.compareRanks(straightFlush);
 
