@@ -13,4 +13,12 @@ public enum RankingResult {
     }
     return SIMILAR;
   }
+
+  public RankingResult reverse() {
+    return switch (this) {
+      case HIGHER -> LOWER;
+      case LOWER -> HIGHER;
+      case SIMILAR -> SIMILAR;
+    };
+  }
 }
