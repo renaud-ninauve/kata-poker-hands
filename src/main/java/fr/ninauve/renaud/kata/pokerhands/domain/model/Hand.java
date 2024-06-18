@@ -1,10 +1,13 @@
 package fr.ninauve.renaud.kata.pokerhands.domain.model;
 
 import fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit;
+import fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FigureRanking;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FlushRanking;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.StraightFlushRanking;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,7 +27,14 @@ public class Hand {
   }
 
   public static Hand straightFlush(Card highest) {
-    return null;
+    final List<Card> cards = new ArrayList<>();
+    cards.add(highest);
+    while (cards.size() < 5) {
+      final Card previous = cards.get(cards.size() - 1);
+      final Value nextLesserValue = Value.values()[previous.value().ordinal() - 1];
+      cards.add(nextLesserValue.of(highest.suit()));
+    }
+    return new Hand(new HashSet<>(cards));
   }
 
   public RankingResult compareRanks(Hand other) {
@@ -59,7 +69,9 @@ public class Hand {
 
   public Hand incrementValues() {
     final Set<Card> newCards =
-        cards.stream().map(card -> card.value().next().of(card.suit())).collect(Collectors.toSet());
+        cards.stream()
+            .map(card -> card.value().next().of(card.suit()))
+            .collect(Collectors.toSet());
     return new Hand(newCards);
   }
 }
