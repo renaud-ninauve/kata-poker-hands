@@ -23,6 +23,10 @@ public class Hand {
     return new Hand(Set.of(card1, card2, card3, card4, card5));
   }
 
+  public static Hand straightFlush(Card highest) {
+    return null;
+  }
+
   public RankingResult compareRanks(Hand other) {
     final List<FigureRanking> rankings = List.of(new StraightFlushRanking(), new FlushRanking());
 
