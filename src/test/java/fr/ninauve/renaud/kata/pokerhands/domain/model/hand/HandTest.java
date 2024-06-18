@@ -1,7 +1,10 @@
 package fr.ninauve.renaud.kata.pokerhands.domain.model.hand;
 
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.CLUBS;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.DIAMONDS;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.HEARTS;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.SPADES;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.ACE;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.EIGHT;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.FIVE;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.FOUR;
@@ -37,11 +40,24 @@ class HandTest {
   @Test
   void create_straight_flush() {
     assertThat(Hand.straightFlush(NINE.of(DIAMONDS)))
-        .isEqualTo(Hand.of(
-            FIVE.of(DIAMONDS),
-            SIX.of(DIAMONDS),
-            SEVEN.of(DIAMONDS),
-            EIGHT.of(DIAMONDS),
-            NINE.of(DIAMONDS)));
+        .isEqualTo(
+            Hand.of(
+                FIVE.of(DIAMONDS),
+                SIX.of(DIAMONDS),
+                SEVEN.of(DIAMONDS),
+                EIGHT.of(DIAMONDS),
+                NINE.of(DIAMONDS)));
+  }
+
+  @Test
+  void create_four_of_a_kind() {
+    assertThat(Hand.fourOfAKind(ACE, NINE.of(DIAMONDS)))
+        .isEqualTo(
+            Hand.of(
+                ACE.of(CLUBS),
+                ACE.of(HEARTS),
+                ACE.of(DIAMONDS),
+                ACE.of(SPADES),
+                NINE.of(DIAMONDS)));
   }
 }

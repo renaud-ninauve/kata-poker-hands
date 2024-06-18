@@ -37,6 +37,10 @@ public class Hand {
     return new Hand(new HashSet<>(cards));
   }
 
+  public static Hand fourOfAKind(Value value, Card other) {
+   return null;
+  }
+
   public RankingResult compareRanks(Hand other) {
     final List<FigureRanking> rankings = List.of(new StraightFlushRanking(), new FlushRanking());
 
