@@ -6,6 +6,8 @@ import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.HEARTS;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.SPADES;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.EIGHT;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.FOUR;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.KING;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.SEVEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.SIX;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TWO;
@@ -21,17 +23,28 @@ import org.junit.jupiter.params.provider.MethodSource;
 class HandCompareTest {
 
   static Stream<Arguments> compareSource() {
-    final Hand straightFlush = Hand.straightFlush(SIX.of(DIAMONDS));
+    final Hand straight = Hand.straightFlush(SIX.of(DIAMONDS));
+    final Hand kingStraight = Hand.straightFlush(KING.of(DIAMONDS));
+    final Hand sevenStraight = Hand.straightFlush(SEVEN.of(HEARTS));
+
     final Hand flush = Hand.straightFlush(SIX.of(HEARTS)).replace(SIX.of(HEARTS), SIX.of(SPADES));
+    final Hand kingFlush =
+        Hand.straightFlush(KING.of(HEARTS)).replace(KING.of(HEARTS), KING.of(SPADES));
+    final Hand sevenFlush =
+        Hand.straightFlush(SEVEN.of(DIAMONDS)).replace(SEVEN.of(DIAMONDS), SEVEN.of(CLUBS));
+
     final Hand highCard =
         Hand.of(TWO.of(DIAMONDS), FOUR.of(HEARTS), SIX.of(SPADES), EIGHT.of(CLUBS), TEN.of(SPADES));
 
     return Stream.of(
-        Arguments.of(straightFlush, straightFlush, RankingResult.SIMILAR),
-        Arguments.of(straightFlush, highCard, RankingResult.HIGHER),
-        Arguments.of(straightFlush, flush, RankingResult.HIGHER),
+        Arguments.of(straight, straight, RankingResult.SIMILAR),
+        Arguments.of(straight, highCard, RankingResult.HIGHER),
+        Arguments.of(straight, flush, RankingResult.HIGHER),
+        Arguments.of(kingStraight, sevenStraight, RankingResult.HIGHER),
+        Arguments.of(sevenStraight, kingFlush, RankingResult.HIGHER),
         Arguments.of(flush, flush, RankingResult.SIMILAR),
         Arguments.of(flush, highCard, RankingResult.HIGHER),
+        Arguments.of(kingFlush, sevenFlush, RankingResult.HIGHER),
         Arguments.of(highCard, highCard, RankingResult.SIMILAR));
   }
 
