@@ -6,11 +6,13 @@ import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FigureRanking;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.FlushRanking;
 import fr.ninauve.renaud.kata.pokerhands.domain.model.figures.StraightFlushRanking;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +40,10 @@ public class Hand {
   }
 
   public static Hand fourOfAKind(Value value, Card other) {
-   return null;
+    final Stream<Card> otherStream = Stream.of(other);
+    final Stream<Card> fourStream =
+        Stream.concat(otherStream, Arrays.stream(Suit.values()).map(value::of));
+    return new Hand(fourStream.collect(Collectors.toSet()));
   }
 
   public RankingResult compareRanks(Hand other) {
