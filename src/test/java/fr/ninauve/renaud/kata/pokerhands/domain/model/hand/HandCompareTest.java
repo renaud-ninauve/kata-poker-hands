@@ -7,6 +7,8 @@ import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.SPADES;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.EIGHT;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.FOUR;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.KING;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.NINE;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.QUEEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.SEVEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.SIX;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TEN;
@@ -27,6 +29,8 @@ class HandCompareTest {
     final Hand kingStraight = Hand.straightFlush(KING.of(DIAMONDS));
     final Hand sevenStraight = Hand.straightFlush(SEVEN.of(HEARTS));
 
+    final Hand four = Hand.fourOfAKind(QUEEN, NINE.of(SPADES));
+
     final Hand flush = Hand.straightFlush(SIX.of(HEARTS)).replace(SIX.of(HEARTS), SIX.of(SPADES));
     final Hand kingFlush =
         Hand.straightFlush(KING.of(HEARTS)).replace(KING.of(HEARTS), KING.of(SPADES));
@@ -39,9 +43,12 @@ class HandCompareTest {
     return Stream.of(
         Arguments.of(straight, straight, RankingResult.SIMILAR),
         Arguments.of(straight, highCard, RankingResult.HIGHER),
+        Arguments.of(straight, four, RankingResult.HIGHER),
         Arguments.of(straight, flush, RankingResult.HIGHER),
         Arguments.of(kingStraight, sevenStraight, RankingResult.HIGHER),
         Arguments.of(sevenStraight, kingFlush, RankingResult.HIGHER),
+        Arguments.of(four, flush, RankingResult.HIGHER),
+        Arguments.of(four, four, RankingResult.SIMILAR),
         Arguments.of(flush, flush, RankingResult.SIMILAR),
         Arguments.of(flush, highCard, RankingResult.HIGHER),
         Arguments.of(kingFlush, sevenFlush, RankingResult.HIGHER),
