@@ -39,6 +39,7 @@ class HandCompareTest {
 
     final Hand highCard =
         Hand.of(TWO.of(DIAMONDS), FOUR.of(HEARTS), SIX.of(SPADES), EIGHT.of(CLUBS), TEN.of(SPADES));
+    final Hand highCard1 = highCard.replace(EIGHT.of(CLUBS), NINE.of(CLUBS));
 
     return Stream.of(
         Arguments.of(straight, straight, RankingResult.SIMILAR),
@@ -52,7 +53,8 @@ class HandCompareTest {
         Arguments.of(flush, flush, RankingResult.SIMILAR),
         Arguments.of(flush, highCard, RankingResult.HIGHER),
         Arguments.of(kingFlush, sevenFlush, RankingResult.HIGHER),
-        Arguments.of(highCard, highCard, RankingResult.SIMILAR));
+        Arguments.of(highCard, highCard, RankingResult.SIMILAR),
+        Arguments.of(highCard1, highCard, RankingResult.HIGHER));
   }
 
   @ParameterizedTest
