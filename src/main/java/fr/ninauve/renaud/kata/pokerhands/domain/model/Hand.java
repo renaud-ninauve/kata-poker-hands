@@ -55,11 +55,27 @@ public class Hand {
         .filter(ranking -> ranking.matches(this) || ranking.matches(other))
         .findFirst()
         .map(ranking -> ranking.compareRanks(this, other))
-        .orElse(RankingResult.SIMILAR);
+        .orElse(compareByValues(other));
+  }
+
+  private RankingResult compareByValues(Hand other) {
+    final List<Card> myCards = highestToLowest();
+    final List<Card> otherCards = other.highestToLowest();
+    for (int i = 0; i < 5; i++) {
+      final int compareResult = myCards.get(i).compareTo(otherCards.get(i));
+      if (compareResult != 0) {
+        return RankingResult.fromCompareResult(compareResult);
+      }
+    }
+    return RankingResult.SIMILAR;
   }
 
   public List<Card> lowestToHighest() {
     return cards.stream().sorted(Comparator.comparing(Card::value)).toList();
+  }
+
+  public List<Card> highestToLowest() {
+    return cards.stream().sorted(Comparator.comparing(Card::value).reversed()).toList();
   }
 
   public Card highest() {
