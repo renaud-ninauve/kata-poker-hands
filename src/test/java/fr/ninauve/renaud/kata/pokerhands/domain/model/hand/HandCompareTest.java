@@ -5,6 +5,7 @@ import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.DIAMONDS;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.HEARTS;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Suit.SPADES;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.EIGHT;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.FIVE;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.FOUR;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.KING;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.NINE;
@@ -12,6 +13,7 @@ import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.QUEEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.SEVEN;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.SIX;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TEN;
+import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.THREE;
 import static fr.ninauve.renaud.kata.pokerhands.domain.model.Card.Value.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,6 +42,9 @@ class HandCompareTest {
     final Hand highCard =
         Hand.of(TWO.of(DIAMONDS), FOUR.of(HEARTS), SIX.of(SPADES), EIGHT.of(CLUBS), TEN.of(SPADES));
     final Hand highCard1 = highCard.replace(EIGHT.of(CLUBS), NINE.of(CLUBS));
+    final Hand highCard2 = highCard.replace(SIX.of(SPADES), SEVEN.of(SPADES));
+    final Hand highCard3 = highCard.replace(FOUR.of(HEARTS), FIVE.of(HEARTS));
+    final Hand highCard4 = highCard.replace(TWO.of(DIAMONDS), THREE.of(DIAMONDS));
 
     return Stream.of(
         Arguments.of(straight, straight, RankingResult.SIMILAR),
@@ -54,7 +59,10 @@ class HandCompareTest {
         Arguments.of(flush, highCard, RankingResult.HIGHER),
         Arguments.of(kingFlush, sevenFlush, RankingResult.HIGHER),
         Arguments.of(highCard, highCard, RankingResult.SIMILAR),
-        Arguments.of(highCard1, highCard, RankingResult.HIGHER));
+        Arguments.of(highCard1, highCard, RankingResult.HIGHER),
+        Arguments.of(highCard2, highCard, RankingResult.HIGHER),
+        Arguments.of(highCard3, highCard, RankingResult.HIGHER),
+        Arguments.of(highCard4, highCard, RankingResult.HIGHER));
   }
 
   @ParameterizedTest
